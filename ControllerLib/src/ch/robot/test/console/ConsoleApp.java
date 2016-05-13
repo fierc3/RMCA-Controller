@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Random;
 import ch.robot.controller.RobotController;
+import lejos.remote.ev3.RemoteRequestEV3;
+import lejos.robotics.RegulatedMotor;
 
 public class ConsoleApp {
 	
@@ -49,8 +51,24 @@ public class ConsoleApp {
 		    	controller.connectPorts();
 		    	System.out.println("Connected Ports");
 		    	break;
+		    case 'k':
+		    	controller.isTooDark();
+		    	System.out.println("Dark testet");
+		    	break;
 		}
-		}
+		}/*
+		RemoteRequestEV3 ev3 = new RemoteRequestEV3("10.0.1.1");
+		System.out.println("Done conn");
+		RegulatedMotor left, right;
+		left = ev3.createRegulatedMotor("A", 'L');
+		left.stop(false);
+		left.setSpeed(500);
+		left.forward();
+		intro();
+		System.out.println("Done motor");
+		left.close();
+		System.out.println("Done close");
+		*/
 	}
 	
 	public static void intro(){

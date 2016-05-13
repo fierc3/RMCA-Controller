@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;speed&apos; in &apos;ch.robot.controller.RobotController&apos; to &apos;MOVEMENTSPEED&apos;&#x0D;&#x0A;- Original project: &apos;ControllerLib&apos;&#x0D;&#x0A;- Original element: &apos;ch.robot.controller.RobotController.speed&apos;&#x0D;&#x0A;- Renamed element: &apos;ch.robot.controller.RobotController.MOVEMENTSPEED&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;speed&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;ch.robot.controller{RobotController.java[RobotController^speed" name="MOVEMENTSPEED" references="true" setter="false" stamp="1462776220182" textual="false" version="1.0"/>
+</session>

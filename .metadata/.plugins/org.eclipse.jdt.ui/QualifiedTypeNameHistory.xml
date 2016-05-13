@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="ch.robot.controller.RobotController"/>
+<fullyQualifiedTypeName name="lejos.remote.ev3.RMISampleProvider"/>
+<fullyQualifiedTypeName name="ch.robot.controller.exception.RobotSamplingException"/>
+<fullyQualifiedTypeName name="java.io.IOException"/>
+<fullyQualifiedTypeName name="lejos.robotics.RegulatedMotor"/>
+<fullyQualifiedTypeName name="lejos.robotics.SampleProvider"/>
+<fullyQualifiedTypeName name="lejos.remote.ev3.RemoteRequestEV3"/>
+<fullyQualifiedTypeName name="lejos.remote.ev3.RemoteRequestRegulatedMotor"/>
+<fullyQualifiedTypeName name="lejos.remote.ev3.RemoteRequestSampleProvider"/>
+</qualifiedTypeNameHistroy>

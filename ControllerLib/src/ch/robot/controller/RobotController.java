@@ -1,50 +1,54 @@
 package ch.robot.controller;
 
-import java.rmi.RemoteException;
+import java.io.IOException;
 
-import lejos.remote.ev3.RMIRegulatedMotor;
-import lejos.remote.ev3.RemoteEV3;
+import ch.robot.controller.exception.RobotSamplingException;
+import lejos.remote.ev3.RemoteRequestEV3;
+import lejos.remote.ev3.RemoteRequestSampleProvider;
+import lejos.robotics.RegulatedMotor;
 
 public class RobotController{
 	
-	RMIRegulatedMotor mRight;
-	RMIRegulatedMotor mLeft;
-	RemoteEV3 remEv;
-	int speed=500;
+	RegulatedMotor mRight;
+	RegulatedMotor mLeft;
+    RemoteRequestSampleProvider lightProvider;
+    RemoteRequestEV3 remEv;
+	final int MOVEMENTSPEED=500;
+	final int MINIMUMBRIGHTNESS=1;
+
 	
-	public boolean connect(String ipAddress){
-		try{
-			 remEv = new RemoteEV3(ipAddress);
-		}catch(Exception ex){
-			return false;
-		}
-		return true;
+	public void connect(String ipAddress) throws IOException{
+			 remEv = new RemoteRequestEV3(ipAddress);
 		
 	}
 	
-	public boolean connectPorts(){
-		try{
+	public void connectPorts(){
 			mRight = remEv.createRegulatedMotor("A", 'L');
 			mLeft = remEv.createRegulatedMotor("D", 'L');
-		}catch(Exception ex){
-			return false;
-		}
-		return true;
+            lightProvider = (RemoteRequestSampleProvider) remEv.createSampleProvider("S2", "lejos.hardware.EV3ColorSensor", "ambient");
 		
 	}
 	
-	public void disconnectPorts() throws RemoteException{
+	public void disconnectPorts() throws IOException {
+		try{
 		if(mRight != null){
 			mRight.close();
 		}
 		if(mLeft != null){
 			mLeft.close();
 		}
+		if(lightProvider !=null){
+			lightProvider.close();
+		}
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 		
 	}
 	
-	public void turnLeft() throws RemoteException{
-		mLeft.setSpeed(speed);
+	public void turnLeft() throws IOException{
+		try{
+		mLeft.setSpeed(MOVEMENTSPEED);
 		mLeft.stop(false);
 		mLeft.forward();
 		try{
@@ -53,10 +57,14 @@ public class RobotController{
 			System.out.println(ex);
 		}
 		mLeft.stop(true);
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void startTurnLeft() throws RemoteException{
-		mLeft.setSpeed(speed);
+	public void startTurnLeft() throws IOException{
+		try{
+		mLeft.setSpeed(MOVEMENTSPEED);
 		mLeft.stop(false);
 		mLeft.forward();
 		try{
@@ -65,10 +73,14 @@ public class RobotController{
 			System.out.println(ex);
 		}
 		mLeft.stop(true);
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void turnRight() throws RemoteException{
-		mRight.setSpeed(speed);
+	public void turnRight() throws IOException{
+		try{
+		mRight.setSpeed(MOVEMENTSPEED);
 		mRight.stop(false);
 		mRight.forward();
 		try{
@@ -77,18 +89,26 @@ public class RobotController{
 			System.out.println(ex);
 		}
 		mRight.stop(true);
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
 	
-	public void startTurnRight() throws RemoteException{
-		mRight.setSpeed(speed);
+	public void startTurnRight() throws IOException{
+		try{
+		mRight.setSpeed(MOVEMENTSPEED);
 		mRight.stop(false);
 		mRight.forward();
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void forward() throws RemoteException{
-		mLeft.setSpeed(speed);
-		mRight.setSpeed(speed);
+	public void forward() throws IOException{
+		try{
+		mLeft.setSpeed(MOVEMENTSPEED);
+		mRight.setSpeed(MOVEMENTSPEED);
 		mRight.stop(false);
 		mLeft.stop(false);
 		mLeft.forward();
@@ -100,25 +120,37 @@ public class RobotController{
 		}
 		mLeft.stop(true);
 		mRight.stop(true);
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void startForward() throws RemoteException{
-		mLeft.setSpeed(speed);
-		mRight.setSpeed(speed);
+	public void startForward() throws IOException{
+		try{
+		mLeft.setSpeed(MOVEMENTSPEED);
+		mRight.setSpeed(MOVEMENTSPEED);
 		mRight.stop(false);
 		mLeft.stop(false);
 		mLeft.forward();
 		mRight.forward();
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void stopMovementMotors() throws RemoteException{
+	public void stopMovementMotors() throws IOException{
+		try{
 		mLeft.stop(true);
 		mRight.stop(true);
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void backward() throws RemoteException{
-		mLeft.setSpeed(speed);
-		mRight.setSpeed(speed);
+	public void backward() throws IOException{
+		try{
+		mLeft.setSpeed(MOVEMENTSPEED);
+		mRight.setSpeed(MOVEMENTSPEED);
 		mRight.stop(false);
 		mLeft.stop(false);
 		mLeft.backward();
@@ -130,15 +162,36 @@ public class RobotController{
 		}
 		mLeft.stop(true);
 		mRight.stop(true);
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
 	
-	public void startBackward() throws RemoteException{
-		mLeft.setSpeed(speed);
-		mRight.setSpeed(speed);
+	public void startBackward() throws IOException{
+		try{
+		mLeft.setSpeed(MOVEMENTSPEED);
+		mRight.setSpeed(MOVEMENTSPEED);
 		mRight.stop(false);
 		mLeft.stop(false);
 		mLeft.backward();
 		mRight.backward();
+		}catch(Exception ex){
+			throw new IOException(ex.getMessage());
+		}
 	}
+	
+    public boolean isTooDark() throws RobotSamplingException{
+        try {
+            float[] sample = null;
+            lightProvider.fetchSample(sample, 1);;
+            double darkness = sample[0];
+            if(darkness < 1){
+                return true;
+            }
+        } catch (Exception ex) {
+            throw new RobotSamplingException(ex.getMessage());
+        }
+        return false;
+    }
 
 }

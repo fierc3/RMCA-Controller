@@ -1,0 +1,70 @@
+package ch.robot.test.console;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Random;
+import ch.robot.controller.RobotController;
+
+public class ConsoleApp {
+	
+	public static void main(String args[]) throws Exception{/*
+		intro();
+		boolean quit = false;
+		RobotController controller = new RobotController();
+		while(!quit){
+			System.out.println("Available commands \n s=Connect To Ev3\n p=Connect To Ports\n d=disconnect Ports\n l=left turn\n r=Right turn\n f=forward\n b=backward");
+			BufferedReader reader  = new BufferedReader(new InputStreamReader(System.in));
+			String command=reader.readLine();
+			char c = command.charAt(0);
+			
+			switch(c){
+		    case 's' :
+		       controller.connect("10.0.1.1");
+		       System.out.println("Connected remote");
+		       break; //optional
+		    case 'd' :
+		       controller.disconnectPorts();
+		       System.out.println("Disconnected Ports");
+		       break; //optional
+		    case 'l':
+		    	controller.turnLeft();
+		    	System.out.println("Turn left");
+		    	break;
+		    case 'r':
+		    	controller.turnRight();
+		    	System.out.println("Turn right");
+		    	break;
+		    case 'f':
+		    	controller.forward();
+		    	System.out.println("Went Forward");
+		    	break;
+		    case 'b':
+		    	controller.backward();
+		    	System.out.println("Went backward");
+		    	break;
+		    case 'q':
+		    	System.out.println("Make sure all is disconnected");
+		    	break;
+		    case 'p':
+		    	controller.connectPorts();
+		    	System.out.println("Connected Ports");
+		    	break;
+		}
+		}*/
+		
+	}
+	
+	public static void intro(){
+		System.out.println("Hello.......RMCA-Console Starting");
+		for(int i = 0; i < 12; i++){
+			try{
+			Thread.sleep(new Random().nextInt(500)+500);
+			}catch(Exception ex){
+				System.out.println(ex);
+			}
+		System.out.print(".");
+		}
+		System.out.println("Ready!");
+	}
+
+}
